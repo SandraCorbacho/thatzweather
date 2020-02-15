@@ -36,7 +36,8 @@ body, html {
   }
   #codigoPostal{
       background: transparent;
-      
+      color:white;
+      padding-left: 25px;
       width: 527px;
   height: 48px;
   border-radius: 4px;
@@ -74,7 +75,6 @@ body, html {
   }
   ::placeholder { color:#ffffff; 
       vertical-align: center;
-      padding-left: 25px;    
       font-size: 18px;
       font-weight: 400;
    
