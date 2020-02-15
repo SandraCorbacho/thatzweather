@@ -92,3 +92,10 @@ body, html {
      left: 230px;
      bottom: 40px;
   }
+  #tiempo{
+      background-color:black;
+      width: 1114px;
+      height: 530px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: rgba(48, 108, 119, 0.7);
+  }

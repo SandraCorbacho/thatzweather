@@ -10,7 +10,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
-<script src='js/weather.js'></script>
 <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
 </head>
 <body class='bg fuente'>
@@ -28,13 +27,12 @@
                     </div>
                 </div>
                 <div class='row centrar'>
-                    <form>
+                    <form method="POST" action='controllers/resumenTiempo.php'>
                             <div class='col-12'>
                                 <input class='tamano' id='codigoPostal'  type='number' name='codigoPostal' placeholder="Introduce el código Postal">
                             </div>
                             <div id='boton' class='col-12'>
-                                <input id='consulta' class='tamano consultar' type='button' value='Consultar'>
-                               
+                                <input id='consulta' class='tamano consultar' type='submit' value='Consultar'>  
                             </div>
                             <img class='posicion' src='img/shape.png'>
                     </form>
