@@ -1,6 +1,18 @@
 <?php
 $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 
+$codigoPostal=filter_input(INPUT_POST,'codigoPostal');
+require "conexionweather.php";
+
+	$sql="SELECT * FROM tiempo ORDER BY temperatura";
+	
+
+	$resultado=mysqli_query($conexionweather,$sql)or die(mysqli_error($conexionweather));
+	$tiempo=array();
+	while ($datostiempo=mysqli_fetch_assoc($resultado)) {
+		array_push($tiempo, $datostiempo);
+	}
+	print_r($tiempo);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,14 +45,14 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
                     <div class='col-4 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
                     </div>
                     <div class='col-4 '>
-                        <form>
+                        
                       
                             <div class='col-12'>
-                                <img class='imgbuscador' src='../img/shape.png'>
-                                <input class='buscador' type='number' name='codigoPostal' placeholder="Introduce el código Postal">
+                                <img class='imgbuscador' id='lupaBuscador' src='../img/shape.png'>
+                                <input id='codigoBusqueda' class='buscador' type='number' name='codigoPostal' placeholder="Introduce el código Postal">
                             </div>
                             
-                        </form>    
+                           
                     </div>
                 </div>
                 <div class='row'>
@@ -176,8 +188,27 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
     </div>
     
     <script>
-        var codigoPostal=parseInt(<?=$codigoPostal?>);
+if(<?=$codigoPostal?>!=null){
+var codigoPostal=parseInt(<?=$codigoPostal?>);
+llamadaApi(codigoPostal);
+}
 
+var main;
+var nombre;
+var wind;
+var coord;
+var temperatura;
+
+document.getElementById('lupaBuscador').addEventListener('click',Api)
+
+function Api(){
+   
+    var codigo=document.getElementById('codigoBusqueda').value
+    llamadaApi(codigo)
+}
+
+function llamadaApi(codigoPostal){
+    
     codigoPostal=codigoPostal.toString()
     if(codigoPostal.length==4){
         var weatherURL = "http://api.openweathermap.org/data/2.5/weather?zip=0"+codigoPostal+",es&appid=1ebe8fb6c5d2654d9ceb6e243540f115"
@@ -186,8 +217,7 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?zip="+codigoPostal+",es&appid=1ebe8fb6c5d2654d9ceb6e243540f115"
 
     }
-               
-             fetch(weatherURL)
+    fetch(weatherURL)
                     .then(function(respuesta){
                         if(respuesta.ok){
                             return respuesta.json();
@@ -196,25 +226,58 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
                         }                    
                     })
                     .then(function(datos){
-                        
-                        var main = datos.main;
-                        
-                        var wind = datos.wind;
-                        var coord = datos.coord;
-                        var temperatura=parseInt(eval(main.temp)-273);
-                        var icono="http://openweathermap.org/img/w/"+datos.weather[0].icon+".png";
+                       
+                        main = datos.main;
+                        nombre=datos.name
+                        wind = datos.wind;
+                        coord = datos.coord;
+                        temperatura=parseInt(eval(main.temp)-273);
+                        icono="http://openweathermap.org/img/w/"+datos.weather[0].icon+".png";
                         document.getElementById('temp').innerHTML=temperatura;
                         document.getElementById('icono').innerHTML="<img src='"+icono+"'>";
-                        document.getElementById('codPost').innerHTML+=codigoPostal;
-                        document.getElementById('ciudad').innerHTML+=datos.name;
+                        document.getElementById('codPost').innerHTML=codigoPostal;
+                        document.getElementById('ciudad').innerHTML=datos.name;
+                        var datos= new FormData;
+                            datos.append('nombre',nombre)
+                            datos.append('temperatura',temperatura)
+                            datos.append('main',main)
+                            datos.append('wind',wind)
+                            datos.append('icono',icono)
+                            datos.append('codigoPostal',codigoPostal)
+                            
+                            fetch('guardarDatos.php',{
+                                method:'POST',
+                                body:datos
+                            })
 
-                                          
-                        
+                            .then(function(respuesta){
+                                if(respuesta.ok){
+                                    return respuesta.text()
+                                }else {
+                                    throw "error en la peticion"
+                                }
+                            })
+                            .then(function(datos){
+                               
+                            })
+                        .catch(function(error){
+                            alert(error)
+                        })
+                
                     })
 
                     .catch(function(error){
                         alert(error)
                     })
+                   
+
+}
+           
+                
+                
+
+			
+		
              
                    
 
