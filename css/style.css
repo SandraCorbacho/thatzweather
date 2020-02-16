@@ -22,7 +22,7 @@ body, html {
     
   }
   .color1{
-      background-color: #ffffff;
+      background-color:orange
    
   
   }
@@ -61,6 +61,14 @@ body, html {
   font-weight: 700;
   
   }
+  .buscador{
+    background: transparent;
+    color:white;
+    padding-left: 25px;
+    border:none;
+    margin-top:25px;
+     
+  }
   .fuente{
       font-family: 'Muli', sans-serif;
       color:#ffffff
@@ -79,6 +87,7 @@ body, html {
       font-weight: 400;
    
   ;}
+
   #titulo{
       margin-bottom: 50px;
      margin-top: 70px;
@@ -92,10 +101,47 @@ body, html {
      left: 230px;
      bottom: 40px;
   }
-  #tiempo{
+  
+  .tiempo{
       background-color:black;
-      width: 1114px;
-      height: 530px;
+      margin-left: 25px;
+      height:400px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       background-color: rgba(48, 108, 119, 0.7);
   }
+  .margen{
+    margin-left: 50px;
+  }
+  .altura{
+      height: 100px;
+  }
+  .altura2{
+    height: 200px;
+}
+.alturaInterior{
+    height: 150px;
+}
+.justificar{
+    text-align: left;
+    padding-right: 50px;
+    padding-top: 25px;
+}
+.imgbuscador{
+    width: 36px;
+    opacity: 0.5;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
+.negrita{
+    font-weight: bold;
+}
+.borde{
+    border-left:1px solid lightgrey;
+    
+}
+ 

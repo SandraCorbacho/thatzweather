@@ -21,14 +21,160 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
     <div class='container-fluid '>
         <div class='row'>
             <div class='col-12 centrar' id='titulo'>
-                 <img src='../img/ThatzWeather.png'>
-                 <p>¡Que la lluvia no te pare!</p>
+                <img src='../img/ThatzWeather.png'>
+                <p>¡Que la lluvia no te pare!</p>
             </div>      
         </div>
-        <div id='resumenTiempo' class='row'>
-            
+    </div>
+    <div id='resumenTiempo' class='container-fluid'>
+        <div class='row '>
+            <div class='col-8 tiempo margen '>
+                <div class='row justify-content-center '>
+                    <div class='col-4 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
+                    </div>
+                    <div class='col-4 '>
+                        <form>
+                      
+                            <div class='col-12'>
+                                <img class='imgbuscador' src='../img/shape.png'>
+                                <input class='buscador' type='number' name='codigoPostal' placeholder="Introduce el código Postal">
+                            </div>
+                            
+                        </form>    
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-2  '>
+                        <div class='centrar '>Ahora</div>
+                        <div class=' container-fluid'>
+                            <div class='row'>
+                            <div class='col-6' id='icono'>IMG</div>
+                            <div class='col-6'>
+                                <div class='col-10' id='descripTiempo'>descr</div>
+                                <div class='col-10' id='temp'>temp</div>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class='col-5 borde'>
+                    <div class='centrar'>Próximas horas</div>
+                    <div class='row altura2 ' >
+                    
+                        <div class='col-3 alturaInterior '>
+                            <div>Ahora</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3 alturaInterior borde'>
+                            <div>18:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3 alturaInterior borde'>
+                            <div>19:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3 alturaInterior borde'>
+                            <div>20:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class='col-5 borde'>
+                    <div class='centrar'>Próximos 5 días</div>
+                    <div class='row'>
+                        <div class='col-3  alturaInterior'>
+                            <div>Ahora</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3  alturaInterior borde'>
+                            <div>18:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3  alturaInterior borde'>
+                            <div>19:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                        <div class='col-3  alturaInterior borde'>
+                            <div>20:00</div>
+                            <div>img</div>
+                            <div>descrip</div>
+                            <div>temp</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class='col-3 tiempo'>
+                <div class='col-12'><p>Top 5 de las zonas más frías según tus búsquedas</p></div>
+                <div class='col-12'>
+                    <div class='row'>
+                        <div class='col-6'>
+                        icono
+                        </div>
+                        <div class='col-6'>
+                        cp y ciudad
+                        </div>
+                    </div>
+                </div>
+                <div class='col-12'>
+                <div class='row'>
+                        <div class='col-6'>
+                        icono
+                        </div>
+                        <div class='col-6'>
+                        cp y ciudad
+                        </div>
+                    </div>
+                </div>
+                <div class='col-12'>
+                <div class='row'>
+                        <div class='col-6'>
+                        icono
+                        </div>
+                        <div class='col-6'>
+                        cp y ciudad
+                        </div>
+                    </div>
+                </div>
+                <div class='col-12'>
+                <div class='row'>
+                        <div class='col-6'>
+                        icono
+                        </div>
+                        <div class='col-6'>
+                        cp y ciudad
+                        </div>
+                    </div>
+                </div>
+                <div class='col-12'>
+                <div class='row'>
+                        <div class='col-6'>
+                        icono
+                        </div>
+                        <div class='col-6'>
+                        cp y ciudad
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
     <script>
         var codigoPostal=parseInt(<?=$codigoPostal?>);
 
@@ -41,7 +187,7 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 
     }
                
-               fetch(weatherURL)
+             fetch(weatherURL)
                     .then(function(respuesta){
                         if(respuesta.ok){
                             return respuesta.json();
@@ -50,22 +196,19 @@ $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
                         }                    
                     })
                     .then(function(datos){
+                        
                         var main = datos.main;
+                        
                         var wind = datos.wind;
                         var coord = datos.coord;
                         var temperatura=parseInt(eval(main.temp)-273);
                         var icono="http://openweathermap.org/img/w/"+datos.weather[0].icon+".png";
-                        var html='<div id="tiempo">'
-                            html+='<h2>' + datos.name + '</h2>' 
-                            html+='<div><img width="50px" src="'+icono+'"></div>'
-                            html+='<div><b>Temperatura: </b>'+temperatura+'</div>'            
-                            html+='<div><b>Presion: </b>'+ main.pressure+'</div>' 
-                            html+='<div><b>Grados: </b>'+ wind.deg+'</div>' 
-                            html+='<div><b>Velocidad del viento: </b>'+ wind.speed+'</div>'
-                            html+='<div><b>Longitud: </b>'+coord.lon + '</div>' 
-                            html+='<div><b>Latitud: </b>'+coord.lat+ '</div>'             
-                        html+='</div>'                                                                           ;
-                        document.getElementById('resumenTiempo').innerHTML=html
+                        document.getElementById('temp').innerHTML=temperatura;
+                        document.getElementById('icono').innerHTML="<img src='"+icono+"'>";
+                        document.getElementById('codPost').innerHTML+=codigoPostal;
+                        document.getElementById('ciudad').innerHTML+=datos.name;
+
+                                          
                         
                     })
 
