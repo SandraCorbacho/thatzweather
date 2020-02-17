@@ -184,7 +184,32 @@ line-height: 24px;
     margin-top: 10px;
     margin-bottom: 5px;
 }
-@media screen and (max-width: 1200px){
+.espacio{
+    margin-bottom: 40px;
+}
+.tamano1{
+font-size: 3em;
+font-weight: 300;
+}
+.tamano2{
+    font-size: 18px;
+font-weight: 700;
+line-height: 24px;
+}
+.espaciosHoy{
+    margin-bottom: 22px;
+}
+.descripTam{
+    font-size: 14px;
+font-weight: 400;
+line-height: 24px;
+}
+.temp{
+    font-size: 18px;
+font-weight: 700;
+line-height: 24px;
+}
+@media screen and (max-width: 1500px){
     body{
         background-color: #372019;
     }
@@ -211,6 +236,7 @@ line-height: 24px;
     .sinborde{
         border-left: 0px;
     }
+   
    
 }
 @media screen and (max-width: 700px){

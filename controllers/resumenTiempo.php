@@ -72,75 +72,75 @@ require "conexionweather.php";
                     </div>
                 </div>
                 <div class='row centrar'>
-                    <div class='col-xl-2 xol-md-2 col-xs-12 '>
-                        <div class='centrar '>Ahora</div>
+                    <div class='col-xl-3 xol-md-2 col-xs-12 '>
+                        <div class='centrar espacio'>Ahora</div>
                         <div class=' container-fluid'>
                             <div class='row'>
-                            <div class='col-xl-6 col-xm-6 col-xs-12' id='icono'>IMG</div>
-                            <div class='col-6'>
-                                <div class='col-10' id='descripTiempo'>descrip1</div>
-                                <div class='col-10' id='temp'></div>
+                            <div class='col-xl-6 col-xm-6 col-xs-6 ' id='icono'>IMG</div>
+                            <div class='col-xl-6 col-md-6 col-xs-4 '>
+                                <div class='col-10 tamano2' id='descripTiempo'>descrip1</div>
+                                <div class='col-10 tamano1' id='temp'></div>
                             </div>
                             </div>
                         </div>
                         
                     </div>
-                    <div class='col-xl-5 col-xs-12 borde sinborde'>
-                    <div class='centrar'>Próximas horas</div>
+                    <div class='col-xl-4 col-xs-12 borde sinborde'>
+                    <div class='centrar espacio'>Próximas horas</div>
                     <div class='row altura2 ' >
                     
                         <div class='col-3 alturaInterior '>
-                            <div>Ahora</div>
+                            <div class='espaciosHoy'>Ahora</div>
                             <div id='iconoHoy'>img</div>
-                            <div id='descripTiempoHoy'>descrip2</div>
-                            <div id='tempHoy'>temp</div>
+                            <div class='descripTam' id='descripTiempoHoy'>descrip2</div>
+                            <div class='temp' id='tempHoy'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div>18:00</div>
+                            <div class='espaciosHoy'>18:00</div>
                             <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div>19:00</div>
+                            <div class='espaciosHoy'>19:00</div>
                             <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div>20:00</div>
+                            <div class='espaciosHoy'>20:00</div>
                             <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                     </div>
                     </div>
                     <div class='col-xl-5 col-xs-12 borde sinborde '>
-                    <div class='centrar'>Próximos 5 días</div>
+                    <div class='centrar espacio'>Próximos 5 días</div>
                     <div class='row'>
                         <div class='col-3  alturaInterior'>
-                            <div>Ahora</div>
+                            <div class='espaciosHoy'>Ahora</div>
                             <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
+                        </div>
+                        <div class='col-3  alturaInterior borde '>
+                            <div class='espaciosHoy'>mañana</div>
+                            <div>img</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                         <div class='col-3  alturaInterior borde'>
-                            <div>18:00</div>
+                            <div class='espaciosHoy'>dia+2</div>
                             <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='descripTam' >descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                         <div class='col-3  alturaInterior borde'>
-                            <div>19:00</div>
-                            <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
-                        </div>
-                        <div class='col-3  alturaInterior borde'>
-                            <div>20:00</div>
-                            <div>img</div>
-                            <div>descrip</div>
-                            <div>temp</div>
+                            <div class='espaciosHoy'>dia+3</div>
+                            <div >img</div>
+                            <div class='descripTam'>descrip</div>
+                            <div class='temp'>temp</div>
                         </div>
                     </div>
                     </div>
@@ -163,6 +163,7 @@ require "conexionweather.php";
 if(<?=$codigoPostal?>!=null){
 var codigoPostal=parseInt(<?=$codigoPostal?>);
 llamadaApi(codigoPostal);
+
 }
 
 var main;
@@ -177,6 +178,7 @@ function Api(){
    
     var codigo=document.getElementById('codigoBusqueda').value
     llamadaApi(codigo)
+    
 }
 
 function llamadaApi(codigoPostal){
@@ -212,16 +214,31 @@ function llamadaApi(codigoPostal){
                       
                             switch(tiempo){
                                 case 'Clouds':
-                                    icono="<i class='fas fa-cloud '></i>";
+                                    icono="<i class='fas fa-cloud'></i>";
                                     descripcion='Nubes'
+                                    break;
+                                case 'Rain':
+                                    icono="<i class='fas fa-tint'></i>";
+                                    descripcion='Lluvia'
+                                    break;
+                                case 'Clear':
+                                    icono="<i class='fas fa-sun'></i>";
+                                    descripcion='Despejado'
+                                    break;
+                                case 'Snow':
+                                    icono="<i class='fas fa-snowflake'></i>";
+                                    descripcion='Nieve'
                                     break;
                             }
                         document.getElementById('descripTiempo').innerHTML=descripcion
                         document.getElementById('temp').innerHTML=temperatura+"º";
                         document.getElementById('icono').innerHTML=icono;
+                        document.getElementById('icono').classList.add('fa-4x')
                         document.getElementById('codPost').innerHTML=codigoPostal;
                         document.getElementById('ciudad').innerHTML=datos.name;
                         document.getElementById('tempHoy').innerHTML=temperatura;
+                        document.getElementById('iconoHoy').classList.add('fa-2x')
+                        document.getElementById('descripTiempoHoy').innerHTML=descripcion
                         document.getElementById('iconoHoy').innerHTML=icono;
                                         
                       
@@ -260,8 +277,35 @@ function llamadaApi(codigoPostal){
                    
 
 }
-           
-                
+          // llamadaApiHora(codigoPostal)
+function llamadaApiHora(codigoPostal){
+    
+    codigoPostal=codigoPostal.toString()
+    if(codigoPostal.length==4){
+        var weatherURL ="https://samples.openweathermap.org/data/2.5/forecast/hourly?zip=0"+codigoPostal+"&appid=e7aad011f924cc369b24b3ab685b021a"
+
+    }else{
+    var weatherURL = "https://samples.openweathermap.org/data/2.5/forecast/hourly?zip="+codigoPostal+"&appid=e7aad011f924cc369b24b3ab685b021a"
+                     
+    }
+     fetch(weatherURL)
+                    .then(function(respuesta){
+                        if(respuesta.ok){
+                            return respuesta.json();
+                        }else{
+                            throw "error en la peticion";
+                        }                    
+                    })
+                    .then(function(datos){
+                        console.log(datos)
+                    })
+
+                    .catch(function(error){
+                        alert(error)
+                    })
+                   
+
+}              
                 
 
 			
