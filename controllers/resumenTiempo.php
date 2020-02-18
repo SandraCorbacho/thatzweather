@@ -210,7 +210,7 @@ function Api(){
 
 function llamadaApi(codigoPostal){
    
-    codigoPostal=codigoPostal
+    codigoPostal=codigoPostal.toString()
     if(codigoPostal.length==4){
         var weatherURL = "http://api.openweathermap.org/data/2.5/weather?zip=0"+codigoPostal+",es&appid=1ebe8fb6c5d2654d9ceb6e243540f115&lang= es"
 
