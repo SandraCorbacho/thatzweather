@@ -2,7 +2,7 @@
 $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 session_start();
 $codigoEspana=intval(substr($codigoPostal,0,2));
-if(strlen($codigoPostal)<5||$codigoEspana>52){
+if(strlen($codigoPostal)<5||$codigoEspana>52||strlen($codigoPostal)>5){
     $_SESSION['codigo']=$codigoPostal;
 	header('Location: index.php');
 }else{
@@ -53,6 +53,11 @@ unset($_SESSION['codigo']);
 <script src="../js/jquery.min.js"></script>
 <script src="../js/owl.carousel.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+<script>
+        
+        
+
+</script>
 </head>
 <body class='bg fuente'>
     <div class='container-fluid '>
@@ -65,11 +70,11 @@ unset($_SESSION['codigo']);
     </div>
     <div id='resumenTiempo' class='container-fluid '>
         <div class='row alineacion '>
-            <div class='col-xl-8 col-md-11 tiempo margenes0 '>
+            <div class='col-xl-8 col-md-11 col-xs-11 tiempo margenes0 '>
                 <div class='row justify-content-center '>
-                    <div id='movilCaja1' class='col-xl-4 col-xs-12 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
+                    <div id='movilCaja1' class='col-xl-4  col-xs-12 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
                     </div>
-                    <div class='col-xl-4 col-xs-12 '>
+                    <div class='col-xl-4 col-md-6  col-xs-12 '>
                             <div class='col-12'>
                                 <img class='imgbuscador' id='lupaBuscador' src='../img/shape.png'>
                                 <input id='codigoBusqueda' class='buscador' type='number' name='codigoPostal' placeholder="Busca otra zona">
@@ -77,19 +82,22 @@ unset($_SESSION['codigo']);
                     </div>
                 </div>
                 <div class='row centrar'>
-                    <div class='col-xl-3 xol-md-2 col-xs-12 '>
+                    <div class='col-xl-3 col-md-2 col-xs-12 '>
                         <div class='centrar espacio'>Ahora</div>
                         <div class=' container-fluid'>
                             <div class='row'>
-                            <div class='col-xl-6 col-xm-6 col-xs-6 ' id='icono'>IMG</div>
+                            <div class='col-xl-6 col-xm-6 col-xs-6 '><div  id='icono'></div><div><img id='flecha' src='../img/flecha.png'></div></div>
+                            
                             <div class='col-xl-6 col-md-6 col-xs-4 '>
                                 <div class='col-10 tamano2' id='descripTiempo'>descrip1</div>
                                 <div class='col-10 tamano1' id='temp'></div>
+                                <div class='col-12 ' id='viento'></div>
+                             
                             </div>
                             </div>
                         </div>   
                     </div>
-                    <div class='col-xl-4 col-xs-12 borde sinborde'>
+                    <div class='col-xl-5 col-md-6 col-xs-12 borde sinborde'>
                     <div class='centrar espacio'>Próximas horas</div>
                     <div class='row altura2 ' >
                     
@@ -119,7 +127,7 @@ unset($_SESSION['codigo']);
                         </div>
                     </div>
                     </div>
-                    <div class='col-xl-5 col-xs-12 borde sinborde '>
+                    <div class='col-xl-4 col-md-4 col-xs-12 borde sinborde'>
                     <div class='centrar espacio'>Próximos 5 días</div>
                     <div class='row owl-carousel owl-theme'>
                         <div class='col-3  alturaInterior item'>
@@ -194,16 +202,15 @@ document.getElementById('lupaBuscador').addEventListener('click',Api)
 
 function Api(){
 
-   
-    var codigo=document.getElementById('codigoBusqueda').value
-    var codigoEspana=parseInt(codigo.substr(0,2));
-    if(codigo.length<5||codigoEspana>52){
+    codigoPostal=document.getElementById('codigoBusqueda').value
+    var codigoEspana=parseInt(codigoPostal.substr(0,2));
+    if(codigoPostal.length<5||codigoEspana>52){
         window.location="index.php";
     }else{
         
-        console.log(codigo)
-        llamadaApi(codigo)
-        llamadaApiHora(codigo) 
+        console.log(codigoPostal)
+        llamadaApi(codigoPostal)
+        llamadaApiHora(codigoPostal) 
     }
         
 }
@@ -227,7 +234,10 @@ function llamadaApi(codigoPostal){
                         }                    
                     })
                     .then(function(datos){
-                      
+                        if(datos.sys==undefined){
+                            window.location="index.php";
+                        }
+                      console.log(datos)
                         pais=datos.sys.country
                        //console.log(datos.weather.description)
                        tiempo=datos.weather
@@ -257,14 +267,19 @@ function llamadaApi(codigoPostal){
                                     descripcion='Nieve'
                                     break;
                             }
+                            var viento=wind.deg;
+                            
+                            document.getElementById('viento').innerHTML="Viento: "+wind.speed+"km/h";
+
+                            document.getElementById('flecha').style.transition="transform 2s";
+                            document.getElementById('flecha').style.transform = "rotate("+viento+"deg)";
                         document.getElementById('descripTiempo').innerHTML=descripcion;
                         document.getElementById('temp').innerHTML=temperatura+"º";
                         document.getElementById('icono').innerHTML=icono;
                         document.getElementById('icono').classList.add('fa-4x')
-                        console.log(codigoPostal)
-                        document.getElementById('codPost').innerHTML=codigoPostal1;
+                        document.getElementById('codPost').innerHTML=codigoPostal;
                         document.getElementById('ciudad').innerHTML=datos.name;
-                        document.getElementById('tempHoy').innerHTML=temperatura;
+                        document.getElementById('tempHoy').innerHTML=temperatura+"º";
                         document.getElementById('iconoHoy').classList.add('fa-2x')
                         document.getElementById('descripTiempoHoy').innerHTML=descripcion
                         document.getElementById('iconoHoy').innerHTML=icono;
@@ -386,7 +401,7 @@ function llamadaApiHora(codigoPostal){
                             }
                             var posiciones=document.getElementsByClassName('temperaturaHora')
                             for(c=0;c<posiciones.length;c++){
-                                posiciones[c].innerHTML=temperatura1[c]
+                                posiciones[c].innerHTML=temperatura1[c]+"º"
                             }
 
                             //montar el tiempo por dias
@@ -473,7 +488,7 @@ function llamadaApiHora(codigoPostal){
                             temperatura=parseInt(eval(main.temp)-273);
                             var temperaturas=document.getElementsByClassName('diasTemp')
                                     for(r=0;r<1;r++){
-                                        temperaturas[c].innerHTML=temperatura
+                                        temperaturas[c].innerHTML=temperatura+"º";
                                     }   
                               
                             }
@@ -493,10 +508,14 @@ $('.owl-carousel').owlCarousel({
         0:{
             items:4
         },
-        600:{
-            items:4
+       
+        300:{
+            items:3
         },
         1000:{
+            items:3
+        },
+        1500:{
             items:4
         }
     }
