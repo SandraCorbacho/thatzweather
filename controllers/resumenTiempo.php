@@ -1,7 +1,13 @@
 <?php
 $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
-
+session_start();
+$codigoEspana=intval(substr($codigoPostal,0,2));
+if(strlen($codigoPostal)<5||$codigoEspana>52){
+    $_SESSION['codigo']=$codigoPostal;
+	header('Location: index.php');
+}else{
 require "conexionweather.php";
+unset($_SESSION['codigo']);
 
 	$sql="SELECT * FROM tiempo ORDER BY temperatura";
 	
@@ -28,7 +34,7 @@ require "conexionweather.php";
         
        
     }
-    
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +42,16 @@ require "conexionweather.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thatzads</title>
-
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+<link rel="stylesheet" href="../css/owl.theme.default.min.css">
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/1e5694faf5.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="../css/style.css">
-
+<script src="../js/jquery.min.js"></script>
+<script src="../js/owl.carousel.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
 </head>
 <body class='bg fuente'>
@@ -57,7 +65,7 @@ require "conexionweather.php";
     </div>
     <div id='resumenTiempo' class='container-fluid '>
         <div class='row alineacion '>
-            <div class='col-xl-7 col-md-11 tiempo margenes0 '>
+            <div class='col-xl-8 col-md-11 tiempo margenes0 '>
                 <div class='row justify-content-center '>
                     <div id='movilCaja1' class='col-xl-4 col-xs-12 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
                     </div>
@@ -87,63 +95,69 @@ require "conexionweather.php";
                     
                         <div class='col-3 alturaInterior '>
                             <div class='espaciosHoy'>Ahora</div>
-                            <div id='iconoHoy' class='primeraIcono'>img</div>
-                            <div class='descripTam descripHoy' id='descripTiempoHoy'>descrip2</div>
-                            <div class='temp' id='tempHoy'>temp</div>
+                            <div id='iconoHoy' class='primeraIcono'></div>
+                            <div class='descripTam descripHoy' id='descripTiempoHoy'></div>
+                            <div class='temp' id='tempHoy'></div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy primeraHora'>18:00</div>
-                            <div  class='primeraIcono'>img</div>
-                            <div class='descripTam descripHoy'>descrip</div>
-                            <div class='temp temperaturaHora'>temp</div>
+                            <div class='espaciosHoy primeraHora'></div>
+                            <div  class='primeraIcono'></div>
+                            <div class='descripTam descripHoy'></div>
+                            <div class='temp temperaturaHora'></div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy primeraHora'>19:00</div>
-                            <div  class='primeraIcono'>img</div>
-                            <div class='descripTam descripHoy'>descrip</div>
-                            <div class='temp temperaturaHora'>temp</div>
+                            <div class='espaciosHoy primeraHora'></div>
+                            <div  class='primeraIcono'></div>
+                            <div class='descripTam descripHoy'></div>
+                            <div class='temp temperaturaHora'></div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy primeraHora'>20:00</div>
-                            <div  class='primeraIcono'>img</div>
-                            <div class='descripTam descripHoy'>descrip</div>
-                            <div class='temp temperaturaHora'>temp</div>
+                            <div class='espaciosHoy primeraHora'></div>
+                            <div  class='primeraIcono'></div>
+                            <div class='descripTam descripHoy'></div>
+                            <div class='temp temperaturaHora'></div>
                         </div>
                     </div>
                     </div>
                     <div class='col-xl-5 col-xs-12 borde sinborde '>
                     <div class='centrar espacio'>Próximos 5 días</div>
-                    <div class='row'>
-                        <div class='col-3  alturaInterior'>
-                            <div class='espaciosHoy'>Ahora</div>
-                            <div>img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                    <div class='row owl-carousel owl-theme'>
+                        <div class='col-3  alturaInterior item'>
+                            <div class='espaciosHoy NombreDia'></div>
+                            <div class='diasIcono'></div>
+                            <div class='descripTam diasDescrip'></div>
+                            <div class='temp diasTemp'></div>
                         </div>
-                        <div class='col-3  alturaInterior borde '>
-                            <div class='espaciosHoy'>mañana</div>
-                            <div>img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                        <div class='col-3  alturaInterior borde item'>
+                            <div class='espaciosHoy NombreDia'></div>
+                            <div class='diasIcono'></div>
+                            <div class='descripTam diasDescrip'></div>
+                            <div class='temp diasTemp'></div>
                         </div>
-                        <div class='col-3  alturaInterior borde'>
-                            <div class='espaciosHoy'>dia+2</div>
-                            <div>img</div>
-                            <div class='descripTam' >descrip</div>
-                            <div class='temp'>temp</div>
+                        <div class='col-3  alturaInterior borde item'>
+                            <div class='espaciosHoy NombreDia'></div>
+                            <div class='diasIcono'></div>
+                            <div class='descripTam diasDescrip' ></div>
+                            <div class='temp diasTemp'></div>
                         </div>
-                        <div class='col-3  alturaInterior borde'>
-                            <div class='espaciosHoy'>dia+3</div>
-                            <div >img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                        <div class='col-3  alturaInterior borde item'>
+                            <div class='espaciosHoy NombreDia'></div>
+                            <div class='diasIcono'></div>
+                            <div class='descripTam diasDescrip'></div>
+                            <div class='temp diasTemp'></div>
+                        </div>
+                        <div class='col-3  alturaInterior borde item'>
+                            <div class='espaciosHoy NombreDia' id='diadia'></div>
+                            <div class='diasIcono'></div>
+                            <div class='descripTam diasDescrip'></div>
+                            <div class='temp diasTemp'></div>
                         </div>
                         
                     </div>
                     </div>
                 </div>
             </div>
-            <div class='col-xl-4 col-md-11 col-xs-10 tiempo alturas margenes0'>
+            <div class='col-xl-3 col-md-11 col-xs-10 tiempo alturas margenes0'>
                 
                 <div class='col-12 margen'><p>Top 5 de las zonas más frías según tus búsquedas</p></div>
                    
@@ -156,7 +170,12 @@ require "conexionweather.php";
     </div>
     
     <script>
-var codigoPostal=<?php echo $codigoPostal?>;
+var codigoPostal='<?php echo $codigoPostal?>';
+codigoPostal1=codigoPostal
+if(codigoPostal1<5){
+	codigoPostal1.padStart(5 ,'0000')
+}
+
 if(codigoPostal!=null){
 var codigoPostal=parseInt(<?=$codigoPostal?>);
 llamadaApi(codigoPostal);
@@ -174,15 +193,24 @@ var temperatura;
 document.getElementById('lupaBuscador').addEventListener('click',Api)
 
 function Api(){
+
    
     var codigo=document.getElementById('codigoBusqueda').value
-    llamadaApi(codigo)
-    
+    var codigoEspana=parseInt(codigo.substr(0,2));
+    if(codigo.length<5||codigoEspana>52){
+        window.location="index.php";
+    }else{
+        
+        console.log(codigo)
+        llamadaApi(codigo)
+        llamadaApiHora(codigo) 
+    }
+        
 }
 
 function llamadaApi(codigoPostal){
-    
-    codigoPostal=codigoPostal.toString()
+   
+    codigoPostal=codigoPostal
     if(codigoPostal.length==4){
         var weatherURL = "http://api.openweathermap.org/data/2.5/weather?zip=0"+codigoPostal+",es&appid=1ebe8fb6c5d2654d9ceb6e243540f115&lang= es"
 
@@ -195,11 +223,12 @@ function llamadaApi(codigoPostal){
                         if(respuesta.ok){
                             return respuesta.json();
                         }else{
-                            throw "error en la peticion";
+                            window.location="index.php";
                         }                    
                     })
                     .then(function(datos){
-                        
+                      
+                        pais=datos.sys.country
                        //console.log(datos.weather.description)
                        tiempo=datos.weather
                         main = datos.main;
@@ -232,7 +261,8 @@ function llamadaApi(codigoPostal){
                         document.getElementById('temp').innerHTML=temperatura+"º";
                         document.getElementById('icono').innerHTML=icono;
                         document.getElementById('icono').classList.add('fa-4x')
-                        document.getElementById('codPost').innerHTML=codigoPostal;
+                        console.log(codigoPostal)
+                        document.getElementById('codPost').innerHTML=codigoPostal1;
                         document.getElementById('ciudad').innerHTML=datos.name;
                         document.getElementById('tempHoy').innerHTML=temperatura;
                         document.getElementById('iconoHoy').classList.add('fa-2x')
@@ -257,7 +287,7 @@ function llamadaApi(codigoPostal){
                                 if(respuesta.ok){
                                     return respuesta.text()
                                 }else {
-                                    throw "error en la peticion"
+                                    throw "no se han podido guardar los datos";
                                 }
                             })
                             .then(function(datos){
@@ -294,10 +324,11 @@ function llamadaApiHora(codigoPostal){
                         if(respuesta.ok){
                             return respuesta.json();
                         }else{
-                            throw "error en la peticion";
+                            window.location="index.php";
                         }                    
                     })
                     .then(function(datos){
+                        console.log(datos)
                         todo=datos.list;
                         for(c=0;c<3;c++){
                             //controlar las horas
@@ -313,10 +344,10 @@ function llamadaApiHora(codigoPostal){
                             temperatura=parseInt(tiempo.temp-273);
                             temperatura1.push(temperatura)
                         }
-                        for(i=0;i<3;i++){
+                        for(i=0;i<=3;i++){
                                                      
                             icono1.push(datos.list[c].weather[0].main)
-                            console.log(icono1)
+                           console.log(icono1)
                             for(c=0;c<=3;c++){
                                 switch(icono1[c]){
                                 case 'Clouds':
@@ -340,23 +371,15 @@ function llamadaApiHora(codigoPostal){
                                     for(r=0;r<1;r++){
                                         iconos[c].innerHTML=icono
                                     } 
-                                 
                                     for(r=0;r<iconos.length;r++){
                                         iconos[r].classList.add('fa-2x')
                                     }
-                        
                                     var descrip=document.getElementsByClassName('descripHoy')
                                     for(r=0;r<1;r++){
                                         descrip[c].innerHTML=descripcion
                                     }   
-
-                                    
-
-                            }
-                            
-                            
-                    }
-                        
+                            }        
+                    }  
                         var posiciones=document.getElementsByClassName('primeraHora')
                             for(c=0;c<posiciones.length;c++){
                                 posiciones[c].innerHTML=hora1[c]
@@ -365,14 +388,121 @@ function llamadaApiHora(codigoPostal){
                             for(c=0;c<posiciones.length;c++){
                                 posiciones[c].innerHTML=temperatura1[c]
                             }
+
+                            //montar el tiempo por dias
+                            datosTiempo=[];
+                            dias=[];
+                            for(i=0;dias.length<5;i=i+2){
+                                lista=datos.list[i]
+                              
+                                dia=datos.list[i].dt_txt
+                                dia=dia.substr(0,10)
+                                dia=dia.substr(8,2)
+                                if(i==0){
+                                    datosTiempo.push(lista);
+                                    dias.push(dia);
+                                }
+                                $existe=dias.includes(dia);
+                               if($existe==false){
+                                    datosTiempo.push(lista);
+                                    dias.push(dia);
+                                }
+                                
+                            }
+                            //datosTiempo contiene array de dias
+                            
+                            for(c=0;c<datosTiempo.length;c++){
+                                
+                                var dias=["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+                                var meses=["null","January","February","March","April","May","June","July","August","September","October","November","December"]
+
+                                    fecha=datosTiempo[c].dt_txt
+                                    
+                                    anio=fecha.substr(0,4);
+                                    mes=parseInt(fecha.substr(5,2));
+                                    
+                                    mes=meses[mes];
+                                    dia=fecha.substr(8,2);
+
+                                diaSemana(dia, mes,anio);
+                                function diaSemana(dia,mes,anio){
+                                var dt = new Date(mes+' '+dia+', '+anio+' 12:00:00');
+                                    var nombres=document.getElementsByClassName('NombreDia')
+                                        for(r=0;r<nombres.length;r++){
+                                            nombres[c].innerHTML =dias[dt.getUTCDay()];   
+                                        }
+                                    };
+                                   
+                                    iconoDias=datosTiempo[c].weather[0].main
+                                    
+                                for(i=0;i<=3;i++){
+                                        switch(iconoDias){
+                                        case 'Clouds':
+                                            icono="<i class='fas fa-cloud'></i>";
+                                            descripcion='Nubes'
+                                            break;
+                                        case 'Rain':
+                                            icono="<i class='fas fa-tint'></i>";
+                                            descripcion='Lluvia'
+                                            break;
+                                        case 'Clear':
+                                            icono="<i class='fas fa-sun'></i>";
+                                            descripcion='Despejado'
+                                            break;
+                                        case 'Snow':
+                                            icono="<i class='fas fa-snowflake'></i>";
+                                            descripcion='Nieve'
+                                            break;
+                                }
+                                var iconos=document.getElementsByClassName('diasIcono')
+                                    for(r=0;r<1;r++){
+                                        iconos[c].innerHTML=icono
+                                    } 
+                                    for(r=0;r<iconos.length;r++){
+                                        iconos[r].classList.add('fa-2x')
+                                    }
+                                    var descrip=document.getElementsByClassName('diasDescrip')
+                                    for(r=0;r<1;r++){
+                                        descrip[c].innerHTML=descripcion
+                                    }   
+                            }
+
+                            
+                            temperatura=datosTiempo[0].main.temp
+                          
+                            temperatura=parseInt(eval(main.temp)-273);
+                            var temperaturas=document.getElementsByClassName('diasTemp')
+                                    for(r=0;r<1;r++){
+                                        temperaturas[c].innerHTML=temperatura
+                                    }   
+                              
+                            }
+                            
                     })
 
                     .catch(function(error){
                         alert(error)
                     })
                    
-}              
+}  
+$('.owl-carousel').owlCarousel({
+    loop:false,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:4
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:4
+        }
+    }
+})           
 
     </script>
+  
 </body>
 </html>
