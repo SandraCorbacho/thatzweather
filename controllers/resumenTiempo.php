@@ -1,7 +1,6 @@
 <?php
 $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 
-$codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 require "conexionweather.php";
 
 	$sql="SELECT * FROM tiempo ORDER BY temperatura";
@@ -65,10 +64,8 @@ require "conexionweather.php";
                     <div class='col-xl-4 col-xs-12 '>
                             <div class='col-12'>
                                 <img class='imgbuscador' id='lupaBuscador' src='../img/shape.png'>
-                                <input id='codigoBusqueda' class='buscador' type='number' name='codigoPostal' placeholder="Introduce el código Postal">
+                                <input id='codigoBusqueda' class='buscador' type='number' name='codigoPostal' placeholder="Busca otra zona">
                             </div>
-                            
-                           
                     </div>
                 </div>
                 <div class='row centrar'>
@@ -82,8 +79,7 @@ require "conexionweather.php";
                                 <div class='col-10 tamano1' id='temp'></div>
                             </div>
                             </div>
-                        </div>
-                        
+                        </div>   
                     </div>
                     <div class='col-xl-4 col-xs-12 borde sinborde'>
                     <div class='centrar espacio'>Próximas horas</div>
@@ -91,27 +87,27 @@ require "conexionweather.php";
                     
                         <div class='col-3 alturaInterior '>
                             <div class='espaciosHoy'>Ahora</div>
-                            <div id='iconoHoy'>img</div>
-                            <div class='descripTam' id='descripTiempoHoy'>descrip2</div>
+                            <div id='iconoHoy' class='primeraIcono'>img</div>
+                            <div class='descripTam descripHoy' id='descripTiempoHoy'>descrip2</div>
                             <div class='temp' id='tempHoy'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy'>18:00</div>
-                            <div>img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                            <div class='espaciosHoy primeraHora'>18:00</div>
+                            <div  class='primeraIcono'>img</div>
+                            <div class='descripTam descripHoy'>descrip</div>
+                            <div class='temp temperaturaHora'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy'>19:00</div>
-                            <div>img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                            <div class='espaciosHoy primeraHora'>19:00</div>
+                            <div  class='primeraIcono'>img</div>
+                            <div class='descripTam descripHoy'>descrip</div>
+                            <div class='temp temperaturaHora'>temp</div>
                         </div>
                         <div class='col-3 alturaInterior borde'>
-                            <div class='espaciosHoy'>20:00</div>
-                            <div>img</div>
-                            <div class='descripTam'>descrip</div>
-                            <div class='temp'>temp</div>
+                            <div class='espaciosHoy primeraHora'>20:00</div>
+                            <div  class='primeraIcono'>img</div>
+                            <div class='descripTam descripHoy'>descrip</div>
+                            <div class='temp temperaturaHora'>temp</div>
                         </div>
                     </div>
                     </div>
@@ -142,10 +138,10 @@ require "conexionweather.php";
                             <div class='descripTam'>descrip</div>
                             <div class='temp'>temp</div>
                         </div>
+                        
                     </div>
                     </div>
                 </div>
-
             </div>
             <div class='col-xl-4 col-md-11 col-xs-10 tiempo alturas margenes0'>
                 
@@ -160,10 +156,13 @@ require "conexionweather.php";
     </div>
     
     <script>
-if(<?=$codigoPostal?>!=null){
+var codigoPostal=<?php echo $codigoPostal?>;
+if(codigoPostal!=null){
 var codigoPostal=parseInt(<?=$codigoPostal?>);
 llamadaApi(codigoPostal);
-
+llamadaApiHora(codigoPostal)
+}else{
+    window.location.replace="../index.html";
 }
 
 var main;
@@ -203,7 +202,6 @@ function llamadaApi(codigoPostal){
                         
                        //console.log(datos.weather.description)
                        tiempo=datos.weather
-                       
                         main = datos.main;
                         nombre=datos.name
                         wind = datos.wind;
@@ -230,7 +228,7 @@ function llamadaApi(codigoPostal){
                                     descripcion='Nieve'
                                     break;
                             }
-                        document.getElementById('descripTiempo').innerHTML=descripcion
+                        document.getElementById('descripTiempo').innerHTML=descripcion;
                         document.getElementById('temp').innerHTML=temperatura+"º";
                         document.getElementById('icono').innerHTML=icono;
                         document.getElementById('icono').classList.add('fa-4x')
@@ -240,14 +238,14 @@ function llamadaApi(codigoPostal){
                         document.getElementById('iconoHoy').classList.add('fa-2x')
                         document.getElementById('descripTiempoHoy').innerHTML=descripcion
                         document.getElementById('iconoHoy').innerHTML=icono;
-                                        
+                        wind=parseInt(wind.speed)               
                       
                         var datos= new FormData;
                             datos.append('nombre',nombre)
                             datos.append('temperatura',temperatura)
                             datos.append('main',main)
                             datos.append('wind',wind)
-                            datos.append('icono',icono)
+                            
                             datos.append('codigoPostal',codigoPostal)
                             
                             fetch('guardarDatos.php',{
@@ -263,7 +261,7 @@ function llamadaApi(codigoPostal){
                                 }
                             })
                             .then(function(datos){
-                               
+                               console.log(datos)
                             })
                         .catch(function(error){
                             alert(error)
@@ -277,15 +275,18 @@ function llamadaApi(codigoPostal){
                    
 
 }
-          // llamadaApiHora(codigoPostal)
+  hora1=[];
+  temperatura1=[];
+  icono1=[];
 function llamadaApiHora(codigoPostal){
     
     codigoPostal=codigoPostal.toString()
     if(codigoPostal.length==4){
-        var weatherURL ="https://samples.openweathermap.org/data/2.5/forecast/hourly?zip=0"+codigoPostal+"&appid=e7aad011f924cc369b24b3ab685b021a"
+        var weatherURL ="http://api.openweathermap.org/data/2.5/forecast?zip=0"+codigoPostal+",es&appid=e7aad011f924cc369b24b3ab685b021a"
+
 
     }else{
-    var weatherURL = "https://samples.openweathermap.org/data/2.5/forecast/hourly?zip="+codigoPostal+"&appid=e7aad011f924cc369b24b3ab685b021a"
+    var weatherURL = "http://api.openweathermap.org/data/2.5/forecast?zip="+codigoPostal+",es&appid=e7aad011f924cc369b24b3ab685b021a"
                      
     }
      fetch(weatherURL)
@@ -297,24 +298,80 @@ function llamadaApiHora(codigoPostal){
                         }                    
                     })
                     .then(function(datos){
-                        console.log(datos)
+                        todo=datos.list;
+                        for(c=0;c<3;c++){
+                            //controlar las horas
+                            hora=todo[c];
+                            fecha=hora.dt_txt;
+                            largo=(fecha.length)-8
+                            hora=fecha.substr(largo,8)
+                            hora=hora.substr(0,5)
+                            hora1.push(hora)
+                            
+                            tiempo=todo[c]
+                            tiempo=tiempo.main
+                            temperatura=parseInt(tiempo.temp-273);
+                            temperatura1.push(temperatura)
+                        }
+                        for(i=0;i<3;i++){
+                                                     
+                            icono1.push(datos.list[c].weather[0].main)
+                            console.log(icono1)
+                            for(c=0;c<=3;c++){
+                                switch(icono1[c]){
+                                case 'Clouds':
+                                    icono="<i class='fas fa-cloud'></i>";
+                                    descripcion='Nubes'
+                                    break;
+                                case 'Rain':
+                                    icono="<i class='fas fa-tint'></i>";
+                                    descripcion='Lluvia'
+                                    break;
+                                case 'Clear':
+                                    icono="<i class='fas fa-sun'></i>";
+                                    descripcion='Despejado'
+                                    break;
+                                case 'Snow':
+                                    icono="<i class='fas fa-snowflake'></i>";
+                                    descripcion='Nieve'
+                                    break;
+                        }
+                        var iconos=document.getElementsByClassName('primeraIcono')
+                                    for(r=0;r<1;r++){
+                                        iconos[c].innerHTML=icono
+                                    } 
+                                 
+                                    for(r=0;r<iconos.length;r++){
+                                        iconos[r].classList.add('fa-2x')
+                                    }
+                        
+                                    var descrip=document.getElementsByClassName('descripHoy')
+                                    for(r=0;r<1;r++){
+                                        descrip[c].innerHTML=descripcion
+                                    }   
+
+                                    
+
+                            }
+                            
+                            
+                    }
+                        
+                        var posiciones=document.getElementsByClassName('primeraHora')
+                            for(c=0;c<posiciones.length;c++){
+                                posiciones[c].innerHTML=hora1[c]
+                            }
+                            var posiciones=document.getElementsByClassName('temperaturaHora')
+                            for(c=0;c<posiciones.length;c++){
+                                posiciones[c].innerHTML=temperatura1[c]
+                            }
                     })
 
                     .catch(function(error){
                         alert(error)
                     })
                    
-
 }              
-                
-
-			
-		
-             
-                   
-
-
-
 
     </script>
 </body>

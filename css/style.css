@@ -78,6 +78,13 @@
   line-height: 24px;
   margin-top: 140px;
   }
+  #codigoBusqueda::placeholder { color:lightgrey; 
+    vertical-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: underline
+ 
+;}
   ::placeholder { color:#ffffff; 
       vertical-align: center;
       font-size: 18px;
@@ -244,11 +251,7 @@ line-height: 24px;
         text-align:center;
         background-color: blue;
     }
-i{
-width: 50%
-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-background-color: rgba(48, 108, 119, 0.7);
-}
+
 .margenes0{
     margin:10px;
 }

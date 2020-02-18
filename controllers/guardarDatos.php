@@ -4,9 +4,8 @@ $nombre=filter_input(INPUT_POST,'nombre');
 $temperatura=filter_input(INPUT_POST,'temperatura');
 $codigoPostal=filter_input(INPUT_POST,'codigoPostal');
 $viento=filter_input(INPUT_POST,'wind');
-$icono=filter_input(INPUT_POST,'icono');
 
-$sql = "INSERT INTO tiempo VALUES ('$nombre','$temperatura', '$codigoPostal','$viento','$icono')";
+$sql = "INSERT INTO tiempo(ciudad,temperatura,codigo_postal,viento) VALUES ('$nombre','$temperatura', '$codigoPostal','$viento')";
 
 if(!mysqli_query($conexionweather,$sql)){ 
 
