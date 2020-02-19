@@ -230,13 +230,14 @@ function llamadaApi(codigoPostal){
                         if(respuesta.ok){
                             return respuesta.json();
                         }else{
-                            window.location="index.php";
+                            //window.location="index.php";
+                            throw "codigo postal incorrecto ";
+                           
                         }                    
                     })
                     .then(function(datos){
-                        if(datos.sys==undefined){
-                            window.location="index.php";
-                        }
+                        alert('llamada1')
+                    
                       console.log(datos)
                         pais=datos.sys.country
                        //console.log(datos.weather.description)
@@ -339,10 +340,13 @@ function llamadaApiHora(codigoPostal){
                         if(respuesta.ok){
                             return respuesta.json();
                         }else{
-                            window.location="index.php";
+                            //window.location="index.php";
+                            throw "código Postal incorrecto";
                         }                    
                     })
                     .then(function(datos){
+                        alert('llamada2')
+                        
                         console.log(datos)
                         todo=datos.list;
                         for(c=0;c<3;c++){
