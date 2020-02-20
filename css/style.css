@@ -103,12 +103,7 @@
   #parrafo1{
       margin-bottom: 50px;
   }
-  
-  .posicion{
-      position: relative;
-     left: 230px;
-     bottom: 40px;
-  }
+ 
   
   .tiempo{
       background-color:black;
@@ -243,12 +238,10 @@ line-height: 24px;
     .alturas{
         height:450px;
     }
-   
-    sinborde{
-        border-left: 0px;
-    }
-   
-   
+ .moverposicion{
+     position: relative;
+     top:-60px
+ }
 }
 @media screen and (max-width: 700px){
     .prueb{

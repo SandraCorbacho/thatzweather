@@ -31,7 +31,7 @@
                 <div class='row centrar'>
                     <form method="POST" action='resumenTiempo.php'>
                             <div class='col-12'>
-                                <input class='tamano' id='Postal'  type='number' name='codigoPostal' placeholder="Introduce el código Postal" required>
+                                <input class='tamano' id='Postal'  type='text' name='codigoPostal' placeholder="Introduce el código Postal" required>
                             </div>
                             <div id='boton' class='col-12'>
                                 <input id='consulta' class='tamano consultar' type='submit' value='Consultar'>  
