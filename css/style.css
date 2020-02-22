@@ -273,6 +273,7 @@ line-height: 24px;
     
 }
 
+
 #lupaBuscador{
   
     position: relative;
@@ -285,7 +286,6 @@ line-height: 24px;
     top:-80px;
     left:300px
 }
-
 }
 @media screen and (max-width: 770px){
     .prueb{
@@ -320,7 +320,7 @@ line-height: 24px;
   
     position: relative;
     top:-80px;
-    left:250px;
+    left:50px;
     
 }
 #titulo img{
@@ -354,7 +354,8 @@ line-height: 24px;
 }
 #codigoBusqueda{
     position: relative;
-    top:-70px
+    top:-80px;
+    left: 100px;
 }
 
 }

@@ -36,8 +36,8 @@ function llamadaApi(codigoPostal){
         })
         .then(function(datos){
         
-            pais=datos.sys.country
-            tiempo=datos.weather
+            var pais=datos.sys.country
+            var tiempo=datos.weather
             main = datos.main;
             nombre=datos.name
             wind = datos.wind;
