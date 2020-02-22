@@ -59,15 +59,15 @@ require "conexionweather.php";
         <div class='row'>
             <div class='col-xl-12 col-xs-10 centrar' id='titulo'>
                 <img src='../img/ThatzWeather.png'>
-                <p>¡Que la lluvia no te pare!</p>
+                <h4 class='posicionar'>¡Que la lluvia no te pare!</h4>
             </div>      
         </div>
     </div>
     <div id='resumenTiempo' class='container-fluid '>
         <div class='row alineacion '>
-            <div class='col-xl-8 col-md-11 col-xs-11 tiempo margenes0 '>
-                <div class='row justify-content-center '>
-                    <div id='movilCaja1' class='col-xl-4  col-xs-12 altura justificar '> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
+            <div class='col-xl-8 col-md-11 col-xs-11 tiempo margenes0 ' id='contenedor'>
+                <div class='row justify-content-center  '>
+                    <div id='movilCaja1' class='col-xl-4  col-xs-12 altura justificar bajar'> <span>Código Postal: <span id='codPost' class='negrita'></span></span> <br> <span>Ciudad: <span id='ciudad' class='negrita'></span>
                     </div>
                     <div class='col-xl-4 col-md-6  col-xs-12 '>
                             <div class='col-12'>
@@ -77,14 +77,14 @@ require "conexionweather.php";
                     </div>
                 </div>
                 <div class='row centrar'>
-                    <div class='col-xl-3 col-md-2 col-xs-12 '>
+                    <div id='tiempoParaHoy' class='col-xl-3 col-md-2 col-xs-12 '>
                         <div class='centrar espacio'>Hoy</div>
-                        <div class=' container-fluid'>
+                        <div class=' container-fluid subir'>
                             <div class='row'>
                             <div class='col-xl-6 col-xm-6 col-xs-6 '><div  id='icono'></div><div><img id='flecha' src='../img/flecha.png'></div></div>
                             
-                            <div class='col-xl-6 col-md-6 col-xs-4 moverposicion'>
-                                <div class='col-10 tamano2' id='descripTiempo'>descrip1</div>
+                            <div class='col-xl-6 col-md-6 col-xs-4 moverposicion '>
+                                <div class='col-10 tamano2' id='descripTiempo'></div>
                                 <div class='col-10 tamano1' id='temp'></div>
                                 <div class='col-12 ' id='viento'></div>
                              
@@ -160,9 +160,9 @@ require "conexionweather.php";
                     </div>
                 </div>
             </div>
-            <div class='col-xl-3 col-md-11 col-xs-10 tiempo alturas margenes0'>
+            <div class='col-xl-3 col-md-11 col-xs-10 tiempo alturas margenes0 centradoPequeno'>
                 
-                <div class='col-12 margen'><p>Top 5 de las zonas más frías según tus búsquedas</p></div>
+                <div class='col-12 margen '><p class='tamanoLetra'>Top 5 de las zonas más frías según tus búsquedas</p></div>
                    
                 <?=$respuesta?>
                 
