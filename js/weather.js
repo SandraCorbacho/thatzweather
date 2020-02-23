@@ -30,8 +30,7 @@ function llamadaApi(codigoPostal){
             if(respuesta.ok){
                 return respuesta.json();
             }else{
-                //window.location="index.php";
-                throw "codigo postal incorrecto ";
+                throw "Código postal incorrecto";
             }                    
         })
         .then(function(datos){

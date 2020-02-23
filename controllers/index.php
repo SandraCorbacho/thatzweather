@@ -11,7 +11,7 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
-<script>alert('codigo postal incorrecto')</script>
+<script>alert('Código postal incorrecto')</script>
 </head>
 
 <body class='bg fuente'>
@@ -25,7 +25,7 @@
             <div class='col-12'>
                 <div class='row centrar' id='parrafo1'>
                     <div id='caja2' class='col-4 '>
-                     <p>Enteráte del tiempo en la zona exacta que te interesa buscando por código postal</p>
+                     <p>Entérate del tiempo en la zona exacta que te interesa buscando por código postal</p>
                     </div>
                 </div>
                 <div class='row centrar'>
